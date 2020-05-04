@@ -4,3 +4,4 @@ You need to have `docker-compose` already installed and configured in your machi
 
 It doesn't require any config file. It simply use `docker-compose.yaml` file to get insight about your services, by extracting the context path. for the moment, it is necessary to to specify `context` value for each service that you wanna track.
 
+![](https://media.giphy.com/media/M9HnSBnQtqYzwzvhlF/giphy.gif)
