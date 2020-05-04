@@ -2,7 +2,7 @@ package main
 
 import (
 	"bufio"
-	"io"
+	"fmt"
 	"log"
 	"os/exec"
 )
@@ -12,27 +12,20 @@ const DCExec = "docker-compose"
 
 func execCmdHost(arg ...string) {
 	cmd := exec.Command(DCExec, arg...)
-	stderr, err := cmd.StderrPipe()
-	if err != nil {
-		log.Fatalf("could not get stderr pipe: %v", err)
-	}
+
 	stdout, err := cmd.StdoutPipe()
 	if err != nil {
 		log.Fatalf("could not get stdout pipe: %v", err)
 	}
 	go func() {
-		merged := io.MultiReader(stderr, stdout)
-		scanner := bufio.NewScanner(merged)
+		scanner := bufio.NewScanner(stdout)
 		for scanner.Scan() {
 			msg := scanner.Text()
-			log.Printf("%s", msg)
+			fmt.Println(msg)
 		}
 	}()
 	if err := cmd.Start(); err != nil {
-		log.Fatalf("could not run cmd: %v", err)
-	}
-	if err != nil {
-		log.Fatalf("could not wait for cmd: %v", err)
+		log.Fatalf("Error Running cmd: %v", err)
 	}
 }
 
@@ -52,8 +45,8 @@ func down(file string) {
 	execCmdHost("-f", file, "down")
 }
 
-func logs(file, service string) {
-	execCmdHost("-f", file, "logs", "-f", service)
+func logs(file string) {
+	execCmdHost("-f", file, "logs", "-f")
 }
 
 func build(file, service string) {
@@ -67,6 +60,10 @@ func start(file, service string) {
 func refresh(file, service string) {
 	stop(file, service)
 	upBuild(file, service)
+}
+
+func bootstrap(file string) {
+	up(file)
 }
 
 func checkDCExists() {
