@@ -1,0 +1,1 @@
+dc is a command line tool to continuously build and deploy docker-compose services in development mode. It take care of the repeated tasks (build containers, stop container, start containers) letting you to focus on what matters the most: coding.
