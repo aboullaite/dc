@@ -1,7 +1,12 @@
 version: '3'
 services:
-  web:
+  web1:
     build:
-      context: .
+      context: ./web1
     ports:
      - "8080:8080"
+  web2:
+    build:
+      context: ./web2
+    ports:
+     - "8081:8080"
