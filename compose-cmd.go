@@ -58,7 +58,6 @@ func start(file, service string) {
 }
 
 func refresh(file, service string) {
-	stop(file, service)
 	upBuild(file, service)
 }
 
